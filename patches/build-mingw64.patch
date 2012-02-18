@@ -1,0 +1,38 @@
+diff -ur android-ndk-r7/build/tools/prebuilt-common.sh android-ndk-r7.new/build/tools/prebuilt-common.sh
+--- android-ndk-r7/build/tools/prebuilt-common.sh	2012-02-18 14:49:37.619625917 -0600
++++ android-ndk-r7.new/build/tools/prebuilt-common.sh	2012-02-18 09:27:26.749461521 -0600
+@@ -554,9 +554,9 @@
+                 ;;
+         esac
+         if [ "$TRY64" = "yes" ]; then
+-            ABI_CONFIGURE_HOST=amd64-mingw32msvc
++            ABI_CONFIGURE_HOST=x86_64-w64-mingw32
+         else
+-            ABI_CONFIGURE_HOST=i586-mingw32msvc
++            ABI_CONFIGURE_HOST=i686-w64-mingw32
+         fi
+         HOST_OS=windows
+         HOST_TAG=windows
+@@ -651,7 +651,8 @@
+     $NDK_CCACHE $CC $HOST_CFLAGS -c -o $TMPO $TMPC >$TMPL 2>&1
+     if [ $? != 0 ] ; then
+         log "no"
+-        if [ "$TRY64" != "yes" ]; then
++        #Do not use -m32 for windows 32bit cross builds
++        if [ "$TRY64" != "yes" -a "$MINGW" != "yes" ]; then
+             # NOTE: We need to modify the definitions of CC and CXX directly
+             #        here. Just changing the value of CFLAGS / HOST_CFLAGS
+             #        will not work well with the GCC toolchain scripts.
+@@ -802,7 +803,11 @@
+ {
+     local RET=$HOST_TAG
+     if [ "$MINGW" = "yes" ]; then
+-        RET=windows
++        if [ "$TRY64" = "no" ]; then
++            RET=windows
++        else
++            RET=windows_64
++        fi
+     fi
+     case $RET in
+         linux-x86_64)

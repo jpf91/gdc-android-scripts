@@ -1,0 +1,12 @@
+diff -ur android-ndk/android-ndk-r7/build/tools/prebuilt-common.sh android-ndk-mingw32/android-ndk-r7/build/tools/prebuilt-common.sh
+--- android-ndk/android-ndk-r7/build/tools/prebuilt-common.sh	2011-11-03 13:24:57.000000000 +0100
++++ android-ndk-mingw32/android-ndk-r7/build/tools/prebuilt-common.sh	2012-02-05 13:31:53.317388191 +0100
+@@ -697,7 +697,7 @@
+     # detect build tag
+     case $HOST_TAG in
+         linux-x86)
+-            ABI_CONFIGURE_BUILD=i386-linux-gnu
++            ABI_CONFIGURE_BUILD=i486-linux-gnu
+             ;;
+         linux-x86_64)
+             ABI_CONFIGURE_BUILD=x86_64-linux-gnu

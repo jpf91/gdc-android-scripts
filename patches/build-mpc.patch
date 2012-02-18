@@ -1,0 +1,21 @@
+diff -ur android-ndk-r7.orig/build/tools/build-gcc.sh android-ndk-r7/build/tools/build-gcc.sh
+--- android-ndk-r7.orig/build/tools/build-gcc.sh	2011-10-24 16:37:26.000000000 +0200
++++ android-ndk-r7/build/tools/build-gcc.sh	2012-02-04 14:49:36.705898017 +0100
+@@ -45,6 +45,9 @@
+ GDB_VERSION=$DEFAULT_GDB_VERSION
+ register_var_option "--gdb-version=<version>"  GDB_VERSION "Specify gdb version"
+ 
++MPC_VERSION=0.8.1
++register_var_option "--mpc-version=<version>" MPC_VERSION "Specify mpc version"
++
+ BINUTILS_VERSION=$DEFAULT_BINUTILS_VERSION
+ register_var_option "--binutils-version=<version>" BINUTILS_VERSION "Specify binutils version"
+ 
+@@ -209,6 +212,7 @@
+                         --with-gmp-version=$GMP_VERSION \
+                         --with-gcc-version=$GCC_VERSION \
+                         --with-gdb-version=$GDB_VERSION \
++                        --with-mpc-version=$MPC_VERSION \
+                         $ABI_CONFIGURE_EXTRA_FLAGS
+ if [ $? != 0 ] ; then
+     dump "Error while trying to configure toolchain build. See $TMPLOG"
