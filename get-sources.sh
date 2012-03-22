@@ -46,7 +46,10 @@ cd gcc-4.6.2
 patch -p1 -i $BASE_DIR/patches/gcc-android.patch
 cd ../../
 
-hg clone https://bitbucket.org/goshawk/gdc
+git clone https://jpf91@github.com/jpf91/GDC.git gdc
+cd gdc
+git checkout android
+cd ../
 
 cd gcc/gcc-4.6.2/
 ln -s ../../../gdc/d gcc/d

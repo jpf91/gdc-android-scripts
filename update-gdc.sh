@@ -10,7 +10,7 @@ if [ -z $BASE_DIR ]; then
 fi
 
 cd $BASE_DIR/toolchain-src/gdc
-hg pull -u
+git pull
 
 cd ../gcc/gcc-4.6.2/
 ./gcc/d/setup-gcc.sh --update

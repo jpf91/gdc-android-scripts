@@ -16,18 +16,17 @@ NUM_JOBS=1 DFLAGS="-fno-section-anchors" ./build-gcc.sh --mingw --gmp-version=5.
 
 cd $BASE_DIR/toolchain-src/gcc/gcc-4.6.2
 gdc_ver=`cat gcc/d/gdc-version`
-if command -v hg > /dev/null; then
-    hg_branch=`hg  --cwd gcc/d identify -b 2> /dev/null`
-    hg_revision=`hg --cwd gcc/d identify -n 2> /dev/null | sed -e 's/^\(.*\)+$/\1/'`
-    hg_id=`hg --cwd gcc/d identify -i 2> /dev/null`
-    hg --cwd gcc/d identify 2> /dev/null
+dmd_ver=`grep 'version = "v' gcc/d/dmd2/mars.c | sed -e 's/^.*"v\(.*\)".*$/\1/'` || exit 1
+cd $BASE_DIR/toolchain-src/gdc
+if command -v git > /dev/null; then
+    hg_branch=`git rev-parse --abbrev-ref HEAD 2> /dev/null`
+    hg_revision=`git rev-parse HEAD 2> /dev/null`
     if [ "$?" -eq "0" ]; then
         # is branch useful?
         #gdc_ver="$gdc_ver - r$hg_revision:$hg_id($hg_branch)"
-        gdc_ver="$gdc_ver - r$hg_revision:$hg_id"
+        gdc_ver="$gdc_ver - r$hg_revision:($hg_branch)"
     fi
 fi
-dmd_ver=`grep 'version = "v' gcc/d/dmd2/mars.c | sed -e 's/^.*"v\(.*\)".*$/\1/'` || exit 1
 
 cd $BASE_DIR
-7za a -mx9 -t7z "$BASE_DIR/result/android-gdc(windows_x86)[$hg_revision:$hg_id:$dmd_ver].7z" android-ndk-r7/toolchains/arm-linux-androideabi-4.6.2/prebuilt/windows/
+7za a -mx9 -t7z "$BASE_DIR/result/windows/android-gdc[dmd_ver:$hg_revision].7z" android-ndk-r7/toolchains/arm-linux-androideabi-4.6.2/prebuilt/windows/
